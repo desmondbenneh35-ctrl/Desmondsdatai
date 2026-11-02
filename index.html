@@ -1,0 +1,887 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071426">
+<title>Desmond's Data Hub</title>
+<style>
+:root {
+  --navy:#071426;
+  --blue:#2878ff;
+  --cyan:#31d6ee;
+  --white:#fff;
+  --light:#f3f7fc;
+  --text:#14243b;
+  --muted:#718096;
+  --border:#e2eaf4;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--light);
+  color:var(--text);
+}
+.container{width:92%;max-width:1150px;margin:auto}
+button,input,select{font:inherit}
+button{cursor:pointer}
+
+/* NAVIGATION */
+header{
+  background:var(--navy);
+  color:white;
+  position:sticky;
+  top:0;
+  z-index:10;
+  border-bottom:1px solid #ffffff18;
+}
+nav{
+  min-height:75px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:bold;
+}
+.logo-icon{
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  color:var(--navy);
+  padding:12px 15px;
+  border-radius:12px;
+  font-size:20px;
+}
+.logo small{
+  display:block;
+  color:#9eb4ce;
+  font-size:9px;
+  letter-spacing:2px;
+  margin-top:5px;
+}
+.nav-links{display:flex;gap:22px}
+.nav-links a{
+  color:#d1dceb;
+  text-decoration:none;
+  font-size:13px;
+}
+.nav-links a:hover{color:var(--cyan)}
+.cart-button{
+  border:1px solid #38506d;
+  color:white;
+  background:#102640;
+  padding:12px 15px;
+  border-radius:10px;
+}
+
+/* HERO */
+.hero{
+  background:
+    radial-gradient(circle at 85% 20%,#2467aa66,transparent 35%),
+    linear-gradient(120deg,#071426,#102e50);
+  color:white;
+  padding:85px 0;
+}
+.hero-content{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  align-items:center;
+  gap:40px;
+}
+.tag{
+  color:#9bdcff;
+  font-size:11px;
+  letter-spacing:2px;
+  font-weight:bold;
+}
+.hero h1{
+  font-size:clamp(38px,5vw,62px);
+  line-height:1.08;
+  margin:20px 0;
+}
+.hero h1 span{
+  color:var(--cyan);
+}
+.hero p{
+  color:#b7c9dc;
+  line-height:1.8;
+  max-width:520px;
+}
+.btn{
+  border:none;
+  padding:14px 20px;
+  border-radius:10px;
+  font-weight:bold;
+}
+.primary{
+  background:linear-gradient(100deg,var(--blue),#39aaff);
+  color:white;
+}
+.secondary{
+  background:#ffffff12;
+  color:white;
+  border:1px solid #ffffff40;
+}
+.hero-actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:25px;
+}
+.hero-card{
+  background:#ffffff12;
+  border:1px solid #ffffff30;
+  border-radius:22px;
+  padding:27px;
+}
+.hero-card h2{font-size:30px}
+.networks{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:25px;
+}
+.networks div{
+  background:#071426;
+  padding:18px 8px;
+  border-radius:12px;
+  text-align:center;
+  font-size:12px;
+  font-weight:bold;
+}
+
+/* TRUST STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:25px;
+}
+.stat{
+  background:white;
+  border:1px solid var(--border);
+  padding:20px;
+  border-radius:15px;
+}
+.stat strong{font-size:20px}
+.stat p{font-size:12px;color:var(--muted);margin-bottom:0}
+
+/* GENERAL SECTIONS */
+section{padding:65px 0}
+.section-heading{margin-bottom:25px}
+.section-heading small{
+  color:var(--blue);
+  font-weight:bold;
+  letter-spacing:2px;
+}
+.section-heading h2{
+  font-size:34px;
+  margin:10px 0;
+}
+.section-heading p{
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* BUNDLE SHOP */
+.shop-tools{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.shop-tools input{
+  flex:1;
+  min-width:180px;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  outline:none;
+}
+.filter{
+  padding:12px 16px;
+  border:1px solid var(--border);
+  background:white;
+  border-radius:10px;
+  font-weight:bold;
+}
+.filter.active{
+  background:var(--navy);
+  color:white;
+}
+.network-tabs{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:25px;
+}
+.network-tab{
+  border:1px solid var(--border);
+  background:white;
+  padding:13px 20px;
+  border-radius:10px;
+  font-weight:bold;
+}
+.network-tab.active{
+  background:var(--navy);
+  color:white;
+}
+.bundle-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+.bundle{
+  background:white;
+  padding:20px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  transition:.2s;
+}
+.bundle:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 35px #0b24421a;
+}
+.bundle-tag{
+  background:#eaf2ff;
+  color:var(--blue);
+  font-size:10px;
+  font-weight:bold;
+  padding:6px 9px;
+  border-radius:6px;
+}
+.bundle h3{
+  font-size:25px;
+  margin:18px 0 5px;
+}
+.bundle small{color:var(--muted)}
+.price{
+  font-size:20px;
+  font-weight:bold;
+  margin:17px 0;
+}
+.add{
+  width:100%;
+  border:0;
+  background:#eaf2ff;
+  color:var(--blue);
+  padding:12px;
+  border-radius:9px;
+  font-weight:bold;
+}
+.add:hover{
+  background:var(--blue);
+  color:white;
+}
+
+/* PROMO */
+.promo{
+  background:linear-gradient(110deg,#081b34,#164b7c);
+  color:white;
+  padding:35px;
+  border-radius:20px;
+}
+.promo p{color:#c0d2e5;line-height:1.7}
+
+/* HOW IT WORKS */
+.steps,.features{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+.step,.feature,.faq{
+  background:white;
+  padding:23px;
+  border:1px solid var(--border);
+  border-radius:15px;
+}
+.step-number{
+  background:#eaf2ff;
+  color:var(--blue);
+  padding:12px;
+  display:inline-block;
+  border-radius:10px;
+  font-weight:bold;
+}
+.step p,.feature p,.faq p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.7;
+}
+.features{grid-template-columns:repeat(4,1fr)}
+.feature h3{font-size:15px}
+
+/* FAQ AND CONTACT */
+.faq-list{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.faq summary{
+  font-weight:bold;
+  cursor:pointer;
+}
+.contact{
+  background:#e7f0fc;
+  padding:30px;
+  border-radius:18px;
+}
+.contact p{color:var(--muted)}
+
+/* FOOTER */
+footer{
+  background:#061426;
+  color:white;
+  padding:45px 0 20px;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:25px;
+}
+footer p,footer a{
+  color:#a5b7cd;
+  font-size:12px;
+  line-height:1.8;
+}
+footer a{display:block;text-decoration:none}
+.copyright{
+  border-top:1px solid #ffffff20;
+  margin-top:30px;
+  padding-top:20px;
+  color:#8ca0b9;
+  font-size:11px;
+}
+
+/* CART AND CHECKOUT */
+.overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#0009;
+  z-index:30;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+.overlay.open{display:flex}
+.modal{
+  background:white;
+  width:100%;
+  max-width:520px;
+  max-height:90vh;
+  overflow:auto;
+  padding:25px;
+  border-radius:18px;
+}
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.close{
+  border:0;
+  background:#edf2f7;
+  border-radius:8px;
+  padding:9px 13px;
+  font-size:18px;
+}
+.cart-line{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+  gap:10px;
+}
+.cart-line small{
+  display:block;
+  color:var(--muted);
+  margin-top:5px;
+}
+.remove{
+  border:0;
+  background:#ffecec;
+  color:#bd3333;
+  padding:7px;
+  border-radius:7px;
+}
+.total{
+  display:flex;
+  justify-content:space-between;
+  font-weight:bold;
+  padding:17px 0;
+}
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.field{display:grid;gap:7px}
+.field.full{grid-column:1/-1}
+.field label{
+  font-size:12px;
+  font-weight:bold;
+}
+.field input,.field select{
+  width:100%;
+  padding:13px;
+  border:1px solid var(--border);
+  border-radius:9px;
+}
+.notice{
+  background:#fff7e5;
+  color:#76571b;
+  padding:13px;
+  border-radius:9px;
+  font-size:12px;
+  line-height:1.6;
+  margin:16px 0;
+}
+.toast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--navy);
+  color:white;
+  padding:13px 20px;
+  border-radius:10px;
+  display:none;
+  z-index:50;
+  font-size:13px;
+}
+.toast.show{display:block}
+
+/* MOBILE */
+@media(max-width:850px){
+  .bundle-grid{grid-template-columns:repeat(3,1fr)}
+  .features{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:650px){
+  .nav-links{display:none}
+  .hero-content{grid-template-columns:1fr}
+  .hero{padding:55px 0}
+  .bundle-grid{grid-template-columns:repeat(2,1fr)}
+  .steps,.faq-list{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
+}
+@media(max-width:400px){
+  .bundle-grid{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+<nav class="container">
+  <div class="logo">
+    <div class="logo-icon">D</div>
+    <div>
+      DESMOND'S DATA HUB
+      <small>CONNECT WITHOUT LIMITS</small>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#bundles">Buy Data</a>
+    <a href="#how">How it works</a>
+    <a href="#faq">FAQs</a>
+  </div>
+  <button class="cart-button" onclick="openCart()">
+    Cart (<span id="cartCount">0</span>)
+  </button>
+</nav>
+</header>
+
+<main>
+<section class="hero" id="home">
+<div class="container hero-content">
+  <div>
+    <div class="tag">DATA MADE SIMPLE</div>
+    <h1>Stay connected.<br><span>Move without limits.</span></h1>
+    <p>Buy MTN, Telecel and AirtelTigo data bundles in one simple place. Choose your network, select a package and prepare your order with ease.</p>
+    <div class="hero-actions">
+      <a href="#bundles"><button class="btn primary">Explore bundles →</button></a>
+      <a href="#how"><button class="btn secondary">How it works</button></a>
+    </div>
+  </div>
+  <div class="hero-card">
+    <div class="tag">OUR NETWORKS</div>
+    <h2>Your data. Your choice.</h2>
+    <p>Choose from available packages on your preferred network.</p>
+    <div class="networks">
+      <div>MTN</div>
+      <div>Telecel</div>
+      <div>AirtelTigo</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="container stats">
+  <div class="stat"><strong>3 Networks</strong><p>MTN · Telecel · AirtelTigo</p></div>
+  <div class="stat"><strong>Clear pricing</strong><p>See your total before checkout</p></div>
+  <div class="stat"><strong>Easy ordering</strong><p>Made for mobile and desktop</p></div>
+</div>
+
+<section id="bundles">
+<div class="container">
+  <div class="section-heading">
+    <small>SHOP DATA</small>
+    <h2>Find your bundle</h2>
+    <p>Choose a network and find a package that suits your needs.</p>
+  </div>
+
+  <div class="shop-tools">
+    <input id="search" placeholder="Search data size or package..." oninput="renderBundles()">
+    <button class="filter active" onclick="setCategory('All',this)">All</button>
+    <button class="filter" onclick="setCategory('Regular',this)">Regular</button>
+    <button class="filter" onclick="setCategory('Promo',this)">Promos</button>
+  </div>
+
+  <div class="network-tabs">
+    <button class="network-tab active" onclick="setNetwork('MTN',this)">MTN</button>
+    <button class="network-tab" onclick="setNetwork('Telecel',this)">Telecel</button>
+    <button class="network-tab" onclick="setNetwork('AirtelTigo',this)">AirtelTigo</button>
+  </div>
+
+  <div class="bundle-grid" id="bundleGrid"></div>
+</div>
+</section>
+
+<section>
+<div class="container promo">
+  <h2>Data for work, school and everyday life.</h2>
+  <p>Browse the available packages, add what you need to your cart and review your order before proceeding.</p>
+  <a href="#bundles"><button class="btn primary">Shop bundles →</button></a>
+</div>
+</section>
+
+<section id="how">
+<div class="container">
+  <div class="section-heading">
+    <small>THREE SIMPLE STEPS</small>
+    <h2>How it works</h2>
+  </div>
+  <div class="steps">
+    <div class="step"><span class="step-number">01</span><h3>Choose a bundle</h3><p>Select your network and preferred data package.</p></div>
+    <div class="step"><span class="step-number">02</span><h3>Enter your details</h3><p>Provide the recipient's phone number and review your order.</p></div>
+    <div class="step"><span class="step-number">03</span><h3>Complete payment</h3><p>When payment is connected, approve the payment prompt from your mobile money provider.</p></div>
+  </div>
+</div>
+</section>
+
+<section style="background:#edf3fa" id="why">
+<div class="container">
+  <div class="section-heading">
+    <small>WHY CHOOSE US</small>
+    <h2>A simpler way to buy data</h2>
+  </div>
+  <div class="features">
+    <div class="feature"><h3>Easy to find</h3><p>Search and browse packages quickly.</p></div>
+    <div class="feature"><h3>Upfront prices</h3><p>See the price before you proceed.</p></div>
+    <div class="feature"><h3>Mobile ready</h3><p>Use the website on phones and computers.</p></div>
+    <div class="feature"><h3>Clear ordering</h3><p>Review the network and recipient number.</p></div>
+  </div>
+</div>
+</section>
+
+<section id="faq">
+<div class="container">
+  <div class="section-heading">
+    <small>HELP CENTRE</small>
+    <h2>Frequently asked questions</h2>
+  </div>
+  <div class="faq-list">
+    <details class="faq"><summary>Which networks are available?</summary><p>MTN, Telecel and AirtelTigo.</p></details>
+    <details class="faq"><summary>Can I send data to another number?</summary><p>Enter the recipient's number at checkout and confirm that the network is correct.</p></details>
+    <details class="faq"><summary>Can I pay with Mobile Money?</summary><p>Paystack Mobile Money must be connected through a secure backend before real payments can be accepted.</p></details>
+    <details class="faq"><summary>Is automatic delivery active?</summary><p>Automatic delivery requires a working data supplier API. It should not be advertised as active until tested.</p></details>
+  </div>
+</div>
+</section>
+
+<section>
+<div class="container contact">
+  <h2>Need help with an order?</h2>
+  <p>Add your real WhatsApp support number and business email before publishing.</p>
+  <button class="btn primary" onclick="toast('Add your WhatsApp number before publishing.')">Contact support</button>
+</div>
+</section>
+</main>
+
+<footer>
+<div class="container">
+  <div class="footer-grid">
+    <div>
+      <h3>DESMOND'S DATA HUB</h3>
+      <p>A simple place to browse data bundles for Ghana's major mobile networks.</p>
+    </div>
+    <div><h3>EXPLORE</h3><a href="#bundles">Buy data</a><a href="#how">How it works</a></div>
+    <div><h3>SUPPORT</h3><a href="#faq">FAQs</a><a href="#home">Back to top</a></div>
+  </div>
+  <div class="copyright">© <span id="year"></span> Desmond's Data Hub. All rights reserved.</div>
+</div>
+</footer>
+
+<!-- CART -->
+<div class="overlay" id="cartOverlay" onclick="outsideClose(event,'cartOverlay')">
+<div class="modal">
+  <div class="modal-head"><h2>Your cart</h2><button class="close" onclick="closeModal('cartOverlay')">×</button></div>
+  <div id="cartItems"></div>
+  <div class="total"><span>Total</span><span id="cartTotal">GH₵0.00</span></div>
+  <button class="btn primary" style="width:100%" onclick="checkout()">Continue to checkout</button>
+</div>
+</div>
+
+<!-- CHECKOUT -->
+<div class="overlay" id="checkoutOverlay" onclick="outsideClose(event,'checkoutOverlay')">
+<div class="modal">
+  <div class="modal-head"><h2>Checkout</h2><button class="close" onclick="closeModal('checkoutOverlay')">×</button></div>
+  <p id="checkoutTotal"></p>
+  <form onsubmit="submitOrder(event)">
+    <div class="form-grid">
+      <div class="field full"><label>Your name</label><input required placeholder="Your name"></div>
+      <div class="field"><label>Recipient number</label><input required type="tel" placeholder="0241234567"></div>
+      <div class="field"><label>Email</label><input required type="email" placeholder="you@example.com"></div>
+      <div class="field full"><label>Network</label>
+        <select required id="recipientNetwork">
+          <option value="">Select network</option>
+          <option>MTN</option><option>Telecel</option><option>AirtelTigo</option>
+        </select>
+      </div>
+    </div>
+    <div class="notice">
+      Payment is not connected in this HTML preview. Paystack must be connected securely before customers can make real payments. Never enter a MoMo PIN on this website.
+    </div>
+    <button class="btn primary" style="width:100%">Review order</button>
+  </form>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// BUNDLE CATALOGUE
+const bundles = [
+{n:"MTN",c:"Regular",s:"20.46MB",p:1.05},
+{n:"MTN",c:"Regular",s:"40.91MB",p:1.55},
+{n:"MTN",c:"Regular",s:"401.63MB",p:3.55},
+{n:"MTN",c:"Regular",s:"826.72MB",p:10.60},
+{n:"MTN",c:"Regular",s:"1.37GB",p:20.70},
+{n:"MTN",c:"Regular",s:"2.74GB",p:40.70},
+{n:"MTN",c:"Regular",s:"4.11GB",p:60.70},
+{n:"MTN",c:"Regular",s:"5.48GB",p:80.70},
+{n:"MTN",c:"Regular",s:"9.05GB",p:101.50},
+{n:"MTN",c:"Regular",s:"10.86GB",p:121.50},
+{n:"MTN",c:"Regular",s:"13.57GB",p:151.50},
+{n:"MTN",c:"Regular",s:"30.47GB",p:202},
+{n:"MTN",c:"Regular",s:"38.09GB",p:252},
+{n:"MTN",c:"Regular",s:"91.55GB",p:306},
+{n:"MTN",c:"Regular",s:"106.81GB",p:356},
+{n:"MTN",c:"Regular",s:"214.53GB",p:406},
+{n:"MTN",c:"Video",s:"156.01MB",p:1.80},
+{n:"MTN",c:"Video",s:"780.03MB",p:6},
+{n:"MTN",c:"Video",s:"1.52GB",p:11.50},
+{n:"MTN",c:"Social",s:"81.80MB",p:1.80},
+{n:"MTN",c:"Social",s:"407.50MB",p:6},
+{n:"MTN",c:"Social",s:"818.00MB",p:11.50},
+
+{n:"Telecel",c:"Regular",s:"22.29MB",p:.50},
+{n:"Telecel",c:"Regular",s:"50.14MB",p:1},
+{n:"Telecel",c:"Regular",s:"111.43MB",p:2},
+{n:"Telecel",c:"Regular",s:"557.15MB",p:5.70},
+{n:"Telecel",c:"Regular",s:"891.44MB",p:10.70},
+{n:"Telecel",c:"Regular",s:"1.71GB",p:20.70},
+{n:"Telecel",c:"Regular",s:"4.56GB",p:50.70},
+{n:"Telecel",c:"Regular",s:"10.27GB",p:101.50},
+{n:"Telecel",c:"Regular",s:"34.2GB",p:202},
+{n:"Telecel",c:"Regular",s:"102.7GB",p:302},
+{n:"Telecel",c:"Regular",s:"259.7GB",p:403},
+{n:"Telecel",c:"Midnight Overdrive",s:"3.85GB",p:2},
+{n:"Telecel",c:"Midnight Overdrive",s:"9.9GB",p:3.70},
+{n:"Telecel",c:"Hourly Burst",s:"440MB",p:1},
+{n:"Telecel",c:"Hourly Burst",s:"1.1GB",p:2.70},
+{n:"Telecel",c:"Daily",s:"445MB · 1 day",p:3},
+{n:"Telecel",c:"Daily",s:"780MB · 3 days",p:5},
+{n:"Telecel",c:"Daily",s:"2GB · 5 days",p:15.70},
+{n:"Telecel",c:"Daily",s:"2.62GB · 5 days",p:20.70},
+{n:"Telecel",c:"Weekly Systems",s:"1GB · 15 days",p:10.70},
+{n:"Telecel",c:"Weekly Systems",s:"5.13GB · 15 days",p:45.50},
+{n:"Telecel",c:"Monthly",s:"2.51GB",p:20.70},
+{n:"Telecel",c:"Monthly",s:"6.27GB",p:50.70},
+{n:"Telecel",c:"Monthly",s:"13.12GB",p:101.50},
+{n:"Telecel",c:"Monthly",s:"39.93GB",p:203},
+{n:"Telecel",c:"Monthly",s:"114.1GB",p:302},
+{n:"Telecel",c:"Monthly",s:"269.7GB",p:403},
+
+{n:"AirtelTigo",c:"Standard",s:"51MB",p:1},
+{n:"AirtelTigo",c:"Standard",s:"111MB",p:2},
+{n:"AirtelTigo",c:"Standard",s:"390MB",p:3},
+{n:"AirtelTigo",c:"Standard",s:"557MB",p:5},
+{n:"AirtelTigo",c:"Standard",s:"891MB",p:10},
+{n:"AirtelTigo",c:"Standard",s:"1.7GB",p:21.20},
+{n:"AirtelTigo",c:"Standard",s:"4.5GB",p:51.20},
+{n:"AirtelTigo",c:"Standard",s:"10GB",p:101.50},
+{n:"AirtelTigo",c:"Standard",s:"33.4GB",p:202},
+{n:"AirtelTigo",c:"Standard",s:"100.3GB",p:302},
+{n:"AirtelTigo",c:"Standard",s:"117GB",p:356},
+{n:"AirtelTigo",c:"Standard",s:"253.3GB",p:402},
+{n:"AirtelTigo",c:"Hybrid",s:"40MB + 26 mins",p:2},
+{n:"AirtelTigo",c:"Hybrid",s:"120MB + 66 mins",p:5},
+{n:"AirtelTigo",c:"Hybrid",s:"266MB + 138 mins",p:10},
+{n:"AirtelTigo",c:"Hybrid",s:"400MB + 210 mins",p:15.70},
+{n:"AirtelTigo",c:"Kokoo",s:"446MB · 1 day",p:3},
+{n:"AirtelTigo",c:"Kokoo",s:"446MB · 3 days",p:3},
+{n:"AirtelTigo",c:"Kokoo",s:"780MB · 3 days",p:5},
+{n:"AirtelTigo",c:"Kokoo",s:"1GB · 2 days",p:6},
+{n:"AirtelTigo",c:"Kokoo",s:"1.1GB · 5 days",p:10},
+{n:"AirtelTigo",c:"Kokoo",s:"2GB · 4 days",p:15.70},
+{n:"AirtelTigo",c:"Kokoo",s:"2.5GB · 5 days",p:21.20},
+{n:"AirtelTigo",c:"Kokoo",s:"6.2GB · 15 days",p:51.20},
+{n:"AirtelTigo",c:"XXL",s:"12.8GB",p:100.50},
+{n:"AirtelTigo",c:"XXL",s:"39GB",p:202},
+{n:"AirtelTigo",c:"XXL",s:"130.4GB",p:356}
+];
+
+let network="MTN";
+let category="All";
+let cart=[];
+
+function money(n){
+  return "GH₵"+Number(n).toFixed(2);
+}
+
+function renderBundles(){
+  const search=document.getElementById("search").value.toLowerCase();
+  const items=bundles.map((b,i)=>({...b,id:i})).filter(b=>
+    b.n===network &&
+    (category==="All" || (category==="Regular"?b.c==="Regular":b.c!=="Regular")) &&
+    (b.s+" "+b.c).toLowerCase().includes(search)
+  );
+
+  const grid=document.getElementById("bundleGrid");
+
+  if(!items.length){
+    grid.innerHTML="<p>No matching bundles found.</p>";
+    return;
+  }
+
+  grid.innerHTML=items.map(b=>`
+    <div class="bundle">
+      <span class="bundle-tag">${b.c}</span>
+      <h3>${b.s}</h3>
+      <small>${b.n} data bundle</small>
+      <div class="price">${money(b.p)}</div>
+      <button class="add" onclick="addToCart(${b.id})">+ Add to cart</button>
+    </div>
+  `).join("");
+}
+
+function setNetwork(n,button){
+  network=n;
+  document.querySelectorAll(".network-tab").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+  renderBundles();
+}
+
+function setCategory(c,button){
+  category=c;
+  document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+  renderBundles();
+}
+
+function addToCart(id){
+  cart.push({...bundles[id]});
+  updateCart();
+  toast("Bundle added to cart");
+}
+
+function updateCart(){
+  document.getElementById("cartCount").textContent=cart.length;
+}
+
+function openCart(){
+  renderCart();
+  document.getElementById("cartOverlay").classList.add("open");
+}
+
+function renderCart(){
+  const box=document.getElementById("cartItems");
+
+  if(!cart.length){
+    box.innerHTML="<p>Your cart is empty.</p>";
+  }else{
+    box.innerHTML=cart.map((b,i)=>`
+      <div class="cart-line">
+        <div><strong>${b.n} · ${b.s}</strong><small>${b.c}</small></div>
+        <div>${money(b.p)}<br><button class="remove" onclick="removeItem(${i})">Remove</button></div>
+      </div>
+    `).join("");
+  }
+
+  const total=cart.reduce((sum,b)=>sum+b.p,0);
+  document.getElementById("cartTotal").textContent=money(total);
+}
+
+function removeItem(i){
+  cart.splice(i,1);
+  updateCart();
+  renderCart();
+}
+
+function checkout(){
+  if(!cart.length){
+    toast("Your cart is empty");
+    return;
+  }
+
+  const networks=[...new Set(cart.map(b=>b.n))];
+  if(networks.length>1){
+    toast("Please order one network at a time");
+    return;
+  }
+
+  closeModal("cartOverlay");
+  document.getElementById("recipientNetwork").value=networks[0];
+  document.getElementById("checkoutTotal").textContent=
+    "Order total: "+money(cart.reduce((s,b)=>s+b.p,0));
+  document.getElementById("checkoutOverlay").classList.add("open");
+}
+
+function submitOrder(event){
+  event.preventDefault();
+  toast("Order details checked. Payment is not connected yet.");
+}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove("open");
+}
+
+function outsideClose(event,id){
+  if(event.target.id===id)closeModal(id);
+}
+
+function toast(message){
+  const el=document.getElementById("toast");
+  el.textContent=message;
+  el.classList.add("show");
+  setTimeout(()=>el.classList.remove("show"),2500);
+}
+
+document.getElementById("year").textContent=new Date().getFullYear();
+renderBundles();
+updateCart();
+</script>
+</body>
+</html>
