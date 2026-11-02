@@ -921,9 +921,69 @@ function checkout(){
   document.getElementById("checkoutOverlay").classList.add("open");
 }
 
-function submitOrder(event){
+  
+async function submitOrder(event) {
   event.preventDefault();
-  toast("Order details checked. Payment is not connected yet.");
+
+  if (!cart.length) {
+    toast("Please add a bundle to your cart first.");
+    return;
+  }
+
+  const name = document.getElementById("customerName").value.trim();
+  const email = document.getElementById("customerEmail").value.trim();
+  const recipientNumber = document.getElementById("recipientNumber").value.trim();
+  const recipientNetwork = document.getElementById("recipientNetwork").value;
+
+  if (cart.some(item => item.n !== recipientNetwork)) {
+    toast("Your selected network does not match your bundles.");
+    return;
+  }
+
+  const button = event.submitter;
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Connecting to Paystack...";
+  }
+
+  try {
+    const response = await fetch(
+      "/.netlify/functions/initialize-payment",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          recipientNumber,
+          recipientNetwork,
+          items: cart.map(item => ({
+            n: item.n,
+            c: item.c,
+            s: item.s
+          }))
+        })
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || !result.authorization_url) {
+      throw new Error(result.error || "Payment could not start.");
+    }
+
+    window.location.href = result.authorization_url;
+
+  } catch (error) {
+    toast(error.message || "Something went wrong.");
+
+    if (button) {
+      button.disabled = false;
+      button.textContent = "Pay with Mobile Money";
+    }
+  }
 }
 
 function closeModal(id){
