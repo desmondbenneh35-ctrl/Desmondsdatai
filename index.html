@@ -710,23 +710,49 @@ footer a{display:block;text-decoration:none}
 <div class="modal">
   <div class="modal-head"><h2>Checkout</h2><button class="close" onclick="closeModal('checkoutOverlay')">×</button></div>
   <p id="checkoutTotal"></p>
-  <form onsubmit="submitOrder(event)">
-    <div class="form-grid">
-      <div class="field full"><label>Your name</label><input required placeholder="Your name"></div>
-      <div class="field"><label>Recipient number</label><input required type="tel" placeholder="0241234567"></div>
-      <div class="field"><label>Email</label><input required type="email" placeholder="you@example.com"></div>
-      <div class="field full"><label>Network</label>
-        <select required id="recipientNetwork">
-          <option value="">Select network</option>
-          <option>MTN</option><option>Telecel</option><option>AirtelTigo</option>
-        </select>
-      </div>
+  
+<form onsubmit="submitOrder(event)">
+  <div class="form-grid">
+    <div class="field full">
+      <label>Your name</label>
+      <input id="customerName" name="customerName"
+        required placeholder="Your name">
     </div>
-    <div class="notice">
-      Payment is not connected in this HTML preview. Paystack must be connected securely before customers can make real payments. Never enter a MoMo PIN on this website.
+
+    <div class="field">
+      <label>Recipient number</label>
+      <input id="recipientNumber" name="recipientNumber"
+        required type="tel" placeholder="0241234567">
     </div>
-    <button class="btn primary" style="width:100%">Review order</button>
-  </form>
+
+    <div class="field">
+      <label>Email</label>
+      <input id="customerEmail" name="customerEmail"
+        required type="email" placeholder="you@example.com">
+    </div>
+
+    <div class="field full">
+      <label>Network</label>
+      <select required id="recipientNetwork"
+        name="recipientNetwork">
+        <option value="">Select network</option>
+        <option value="MTN">MTN</option>
+        <option value="Telecel">Telecel</option>
+        <option value="AirtelTigo">AirtelTigo</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="notice">
+    Never enter your MoMo PIN on this website.
+  </div>
+
+  <button type="submit" class="btn primary"
+    style="width:100%">
+    Pay with Mobile Money
+  </button>
+</form>
+
 </div>
 </div>
 
